@@ -4,7 +4,8 @@
 import pygame
 from constants import * # I've been instructed not to worry about the wildcard for this project
 from player import Player
-
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 def main():
     print("Starting asteroids!")
     print("Screen width:", SCREEN_WIDTH)
@@ -17,9 +18,14 @@ def main():
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
-    Player.containers = updatable, drawable
+    asteroids = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable,)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    asteroidfield = AsteroidField() # any worries about asteroidfield name?
 
     while True:
         for event in pygame.event.get():
