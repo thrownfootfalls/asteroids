@@ -43,7 +43,8 @@ def main():
         # check for collisions
         for asteroid in asteroids:
             if player.collides_with(asteroid):
-                exit() #oof, no time to chat with the grim reaper, eh?
+                print("Game over!")
+                exit()
             for shot in shots:
                 if shot.collides_with(asteroid): # a hit!
                     shot.kill()
