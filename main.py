@@ -41,7 +41,7 @@ def main():
             # we might get a Shot object from the player's update.
             if type(output_from_update) == Shot:
                 shot = output_from_update
-                print(len(shots))
+                #print(len(shots))
 #                shot.containers = (shots, updatable, drawable)
 #                print("Pew!", len(shots))
         #player.update(dt)
@@ -49,7 +49,11 @@ def main():
         # check for collisions
         for asteroid in asteroids:
             if player.collides_with(asteroid):
-                exit() #oof, no holding back
+                exit() #oof, no time to chat with the grim reaper, eh?
+            for shot in shots:
+                if shot.collides_with(asteroid): # a hit!
+                    shot.kill()
+                    asteroid.kill()
 
         # draw on the screen
         pygame.Surface.fill(screen, (0,0,0))
