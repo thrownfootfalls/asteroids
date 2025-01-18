@@ -1,12 +1,13 @@
 from circleshape import CircleShape
 from shot import Shot
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
 import pygame # ok to do it again here?
 
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.shoot_cooldown = 0
 
     # define the triangle shape of the player's appearance
     def triangle(self):
@@ -36,6 +37,7 @@ class Player(CircleShape):
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        self.shoot_cooldown -= dt
         shot = None
 
         if keys[pygame.K_a]:
@@ -46,7 +48,9 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.shoot_cooldown <= 0:
+            # fire, but only if enough time has passed since the last shot
+            self.shoot_cooldown = PLAYER_SHOOT_COOLDOWN
             shot = self.shoot()
 #            print("Pew!")
         return shot
