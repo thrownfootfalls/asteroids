@@ -9,7 +9,7 @@ class Asteroid(CircleShape):
 
     def split(self):
         """Kill this asteroid and, if large enough, return smaller ones."""
-        self.kill() # I'm guessing the rest of this code still runs, though?
+        self.kill() # It seems the rest of this code still runs, though.
         if self.radius <= ASTEROID_MIN_RADIUS:
             return []
         random_angle = random.uniform(20,50)

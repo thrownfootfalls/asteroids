@@ -37,14 +37,8 @@ def main():
                 return
 
         for item in updatable:
+            # get player shots and split asteroids
             output_from_update = item.update(dt)
-            # we might get a Shot object from the player's update.
-            if type(output_from_update) == Shot:
-                shot = output_from_update
-                #print(len(shots))
-#                shot.containers = (shots, updatable, drawable)
-#                print("Pew!", len(shots))
-        #player.update(dt)
 
         # check for collisions
         for asteroid in asteroids:

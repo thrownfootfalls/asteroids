@@ -22,5 +22,6 @@ class CircleShape(pygame.sprite.Sprite):
         pass
 
     def collides_with(self, partner):
+        """Whether this object overlaps its CircleShape-style partner."""
         distance = self.position.distance_to(partner.position)
         return distance < self.radius + partner.radius # what to do if ==?
