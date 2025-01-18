@@ -36,6 +36,11 @@ def main():
             item.update(dt)
         #player.update(dt)
 
+        # check for collisions
+        for asteroid in asteroids:
+            if player.collides_with(asteroid):
+                exit() #oof, no holding back
+
         # draw on the screen
         pygame.Surface.fill(screen, (0,0,0))
         for item in drawable:
