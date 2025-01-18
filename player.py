@@ -1,5 +1,6 @@
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED
+from shot import Shot
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
 import pygame # ok to do it again here?
 
 class Player(CircleShape):
@@ -27,8 +28,15 @@ class Player(CircleShape):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * PLAYER_SPEED * dt
 
+    def shoot(self):
+        shot = Shot(*self.position) # will the * work?
+        shot.velocity = pygame.Vector2((0,1)) * PLAYER_SHOOT_SPEED
+        shot.velocity = shot.velocity.rotate(self.rotation)
+        return shot # but really this needs to go into the shots group
+
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        shot = None
 
         if keys[pygame.K_a]:
             self.rotate(-dt) # turn left
@@ -38,3 +46,7 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
+        if keys[pygame.K_SPACE]:
+            shot = self.shoot()
+#            print("Pew!")
+        return shot

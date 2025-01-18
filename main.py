@@ -6,6 +6,8 @@ from constants import * # I've been instructed not to worry about the wildcard f
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
+
 def main():
     print("Starting asteroids!")
     print("Screen width:", SCREEN_WIDTH)
@@ -19,10 +21,12 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable,)
+    Shot.containers = (shots, updatable, drawable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField() # any worries about asteroidfield name?
@@ -33,7 +37,13 @@ def main():
                 return
 
         for item in updatable:
-            item.update(dt)
+            output_from_update = item.update(dt)
+            # we might get a Shot object from the player's update.
+            if type(output_from_update) == Shot:
+                shot = output_from_update
+                print(len(shots))
+#                shot.containers = (shots, updatable, drawable)
+#                print("Pew!", len(shots))
         #player.update(dt)
 
         # check for collisions
